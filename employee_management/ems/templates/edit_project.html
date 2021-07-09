@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <title>Edit Project</title>
+  </head>
+  <body>
+      <div class="container">
+          <div class="row">
+            <div class="col-3">
+              <div class="list-group mt-5">
+                  <button type="button" onclick="location.href='{% url 'logout' %}'" class="list-group-item list-group-item-action text-center" aria-current="true">
+                    Logout
+                  </button>
+              </div>
+              <div class="list-group mt-5">
+                  <button type="button" onclick="location.href='{% url 'project' %}'" class="list-group-item list-group-item-action">Manage Projects</button>
+                  <button type="button" onclick="location.href='{% url 'employees' %}'" class="list-group-item list-group-item-action">Manage Employees</button>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card mt-5">
+                  <div class="card-header text-center">
+                    Edit Project
+                  </div>
+                  <div class="card-body text-center">
+                      <div class="text-center">
+                          {% for message in messages %}
+                          <h5 class="text-danger">{{message}}</h5>
+                          {% endfor %}
+                      </div>
+                      <br>
+                      <form method="post">
+                          {% csrf_token %}
+                          <div class="row">
+<!--                              column1-->
+                              <div class="col">
+                                  <div class="row">
+                                      <div class="col">
+                                          <label>Project Name : *</label>
+                                      </div>
+                                      <div class="col">
+                                          <input required maxlength="60" type="text" name="p_name" value="{{project.project_name}}">
+                                      </div>
+                                  </div>
+                                  <br>
+                                  <br>
+                                  <div class="row">
+                                      <div class="col">
+                                          <label>Project status : *</label>
+                                      </div>
+                                      <div class="col">
+                                          <select required class="form-select form-select-sm" name="status" aria-label=".form-select-sm example">
+                                              {% for i in status %}
+                                                {% if project.progress_status.status == i.status %}
+                                                  <option selected value="{{i.id}}">{{i.status}}</option>
+                                                {% else %}
+                                                  <option value="{{i.id}}">{{i.status}}</option>
+                                                {% endif %}
+                                              {% endfor %}
+                                          </select>
+                                      </div>
+                                  </div>
+                              </div>
+<!--                              column2-->
+                              <div class="col">
+                                  <div class="row">
+                                      <div class="col">
+                                          <label>Start Date : *</label>
+                                      </div>
+                                      <div class="col">
+                                          <input required type="date" value="{{project.project_start_date|date:'Y-m-d'}}" name="start_date">
+                                      </div>
+                                  </div>
+                                  <br>
+                                  <br>
+                                  <div class="row">
+                                      <div class="col">
+                                          <label>Expected End Date : </label>
+                                      </div>
+                                      <div class="col">
+                                          <input type="date" value="{{project.project_expected_end_date|date:'Y-m-d'}}" name="end_date">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <br>
+                          <br>
+                          <div class="row">
+                              <div class="col-3">
+                                  <label>Description : </label>
+                              </div>
+                              <div class="col-1">
+                                  <textarea name="desc" cols="50" rows="5">{{project.project_details}}</textarea>
+                              </div>
+                          </div>
+                          <br>
+                          <button class="btn btn-dark" type="button" onclick="location.href='{% url 'project' %}'">Cancel</button>
+                          <button class="btn btn-warning" type="submit">Submit</button>
+                      </form>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
